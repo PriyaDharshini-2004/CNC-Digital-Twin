@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/cnc-digital-twin",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -35,6 +36,7 @@
           },
           "configurations": {
             "production": {
+              "outputPath": "dist/cnc-digital-twin",
               "budgets": [
                 {
                   "type": "initial",
@@ -47,9 +49,15 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": false,
+                "fonts": true
+              }
             },
             "development": {
+              "outputPath": "dist/cnc-digital-twin",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
