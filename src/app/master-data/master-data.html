@@ -1,0 +1,167 @@
+<div class="master-data-header">
+    <div class="title">Master Data Management</div>
+    <div class="subtitle">Manage all system master data</div>
+  </div>
+  
+  <!-- Top summary cards -->
+  <div class="summary-cards">
+    <mat-card *ngFor="let card of summary" class="summary-card">
+      <mat-icon>{{ card.icon }}</mat-icon>
+      <div class="summary-value">{{ card.value }}</div>
+      <div class="summary-label">{{ card.label }}</div>
+    </mat-card>
+  </div>
+  
+  <!-- Main content: left (form) and right (list) -->
+  <div class="main-content">
+    <!-- Left: Form Card with Tabs -->
+    <mat-card class="form-card">
+      <mat-tab-group [(selectedIndex)]="selectedFormTab">
+        <mat-tab *ngFor="let tab of formTabs" [label]="tab.label"></mat-tab>
+      </mat-tab-group>
+      <div class="form-content">
+        <!-- Machines Form -->
+        <form *ngIf="selectedFormTab === 0" autocomplete="off">
+          <div class="form-title">Add New Machine</div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Machine Name" [(ngModel)]="machine.name" name="machineName"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Model" [(ngModel)]="machine.model" name="machineModel"></mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="fill">
+              <mat-select placeholder="Status" [(ngModel)]="machine.status" name="machineStatus">
+                <mat-option value="idle">Idle</mat-option>
+                <mat-option value="maintenance">Maintenance</mat-option>
+                <mat-option value="breakdown">Breakdown</mat-option>
+                <mat-option value="running">Running</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Location" [(ngModel)]="machine.location" name="machineLocation"></mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Operator" [(ngModel)]="machine.operator" name="machineOperator"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Cost per Hour (INR)" type="number" [(ngModel)]="machine.cost" name="machineCost"></mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" [disabled]="!isMachineFormValid()">Create Machine</button>
+        </form>
+        <!-- Tools Form -->
+        <form *ngIf="selectedFormTab === 1" autocomplete="off">
+          <div class="form-title">Add New Tool</div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Tool Name" [(ngModel)]="tool.name" name="toolName"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Tool Type" [(ngModel)]="tool.type" name="toolType"></mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Cost (INR)" type="number" [(ngModel)]="tool.cost" name="toolCost"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Wear (%)" type="number" [(ngModel)]="tool.wear" name="toolWear"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Life Remaining (%)" type="number" [(ngModel)]="tool.life" name="toolLife"></mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" [disabled]="!isToolFormValid()">Create Tool</button>
+        </form>
+        <!-- Parts Form -->
+        <form *ngIf="selectedFormTab === 2" autocomplete="off">
+          <div class="form-title">Add New Part</div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Part Name" [(ngModel)]="part.name" name="partName"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Part Number" [(ngModel)]="part.number" name="partNumber"></mat-form-field>
+          </div>
+          <mat-form-field appearance="fill" class="full-width">
+            <textarea matInput placeholder="Description" [(ngModel)]="part.desc" name="partDesc"></textarea>
+          </mat-form-field>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Cycle Time (min)" type="number" [(ngModel)]="part.cycle" name="partCycle"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Target Quantity" type="number" [(ngModel)]="part.target" name="partTarget"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Cost (INR)" type="number" [(ngModel)]="part.cost" name="partCost"></mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" [disabled]="!isPartFormValid()">Create Part</button>
+        </form>
+        <!-- Employees Form -->
+        <form *ngIf="selectedFormTab === 3" autocomplete="off">
+          <div class="form-title">Add New Employee</div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Employee Name" [(ngModel)]="employee.name" name="employeeName"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Employee ID" [(ngModel)]="employee.id" name="employeeId"></mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Role" [(ngModel)]="employee.role" name="employeeRole"></mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-select placeholder="Shift" [(ngModel)]="employee.shift" name="employeeShift">
+                <mat-option value="day">Day</mat-option>
+                <mat-option value="night">Night</mat-option>
+                <mat-option value="swing">Swing</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Hourly Rate (INR)" type="number" [(ngModel)]="employee.rate" name="employeeRate"></mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" [disabled]="!isEmployeeFormValid()">Create Employee</button>
+        </form>
+        <!-- Customers Form -->
+        <form *ngIf="selectedFormTab === 4" autocomplete="off">
+          <div class="form-title">Add New Customer</div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Customer Name" [(ngModel)]="customer.name" name="customerName"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Customer Code" [(ngModel)]="customer.code" name="customerCode"></mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Contact Person" [(ngModel)]="customer.contact" name="customerContact"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Email" [(ngModel)]="customer.email" name="customerEmail"></mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Phone" [(ngModel)]="customer.phone" name="customerPhone"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Address" [(ngModel)]="customer.address" name="customerAddress"></mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" [disabled]="!isCustomerFormValid()">Create Customer</button>
+        </form>
+        <!-- Suppliers Form -->
+        <form *ngIf="selectedFormTab === 5" autocomplete="off">
+          <div class="form-title">Add New Supplier</div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Supplier Name" [(ngModel)]="supplier.name" name="supplierName"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Supplier Code" [(ngModel)]="supplier.code" name="supplierCode"></mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Contact Person" [(ngModel)]="supplier.contact" name="supplierContact"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Email" [(ngModel)]="supplier.email" name="supplierEmail"></mat-form-field>
+          </div>
+          <div class="form-row">
+            <mat-form-field appearance="fill"><input matInput placeholder="Phone" [(ngModel)]="supplier.phone" name="supplierPhone"></mat-form-field>
+            <mat-form-field appearance="fill"><input matInput placeholder="Specialization" [(ngModel)]="supplier.specialization" name="supplierSpecialization"></mat-form-field>
+          </div>
+          <mat-form-field appearance="fill" class="full-width">
+            <input matInput placeholder="Address" [(ngModel)]="supplier.address" name="supplierAddress">
+          </mat-form-field>
+          <button mat-raised-button color="primary" [disabled]="!isSupplierFormValid()">Create Supplier</button>
+        </form>
+      </div>
+    </mat-card>
+  
+    <!-- Right: List Card with Tabs -->
+    <mat-card class="list-card">
+      <mat-tab-group [(selectedIndex)]="selectedListTab">
+        <mat-tab *ngFor="let tab of listTabs" [label]="tab.label"></mat-tab>
+      </mat-tab-group>
+      <div class="list-content">
+        <!-- Machines List -->
+        <div *ngIf="selectedListTab === 0">
+          <div class="list-header">
+            <span>Name</span>
+            <span>Model</span>
+            <span>Status</span>
+            <span>Location</span>
+          </div>
+          <div class="list-row" *ngFor="let m of machines">
+            <span>{{ m.name }}</span>
+            <span>{{ m.model }}</span>
+            <span>
+              <span class="status-badge" [ngClass]="m.status">{{ m.status }}</span>
+            </span>
+            <span>{{ m.location }}</span>
+          </div>
+        </div>
+        <!-- Tools/Parts List: Placeholder -->
+        <div *ngIf="selectedListTab === 1 || selectedListTab === 2" class="placeholder">
+          No data to display.
+        </div>
+      </div>
+    </mat-card>
+  </div>

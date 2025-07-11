@@ -1,0 +1,663 @@
+// Colors
+$background: #181c23;
+$card-bg: linear-gradient(135deg, #23283a 60%, #2c3142 100%);
+$card-bg-alt: linear-gradient(135deg, #1a1e2a 60%, #23283a 100%);
+$text-main: #fff;
+$text-secondary: #b0b0b0;
+$brand-green: #7fff00;
+$brand-blue: #00eaff;
+$brand-yellow: #ffb300;
+$brand-red: #ff5252;
+$brand-purple: #b388ff;
+$brand-orange: #ff6f00;
+$border-radius: 18px;
+$shadow: 0 4px 24px 0 #0008;
+
+// General
+:host {
+  display: block;
+  background: $background;
+  min-height: 100vh;
+  color: $text-main;
+  font-family: 'Inter', 'Roboto', Arial, sans-serif;
+}
+
+// Header
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 32px 8px 32px;
+  .header-title {
+    display: flex;
+    align-items: center;
+    .brand {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $text-main;
+      margin-right: 12px;
+    }
+    .active-dot {
+      width: 10px;
+      height: 10px;
+      background: $brand-green;
+      border-radius: 50%;
+      margin-right: 8px;
+      display: inline-block;
+      box-shadow: 0 0 8px $brand-green;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: $brand-green;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+  }
+  .header-user {
+    display: flex;
+    align-items: center;
+    .last-updated {
+      font-size: 0.9rem;
+      color: $text-secondary;
+      margin-right: 12px;
+      text-align: right;
+      line-height: 1.2;
+    }
+    .user-btn {
+      color: $text-main;
+      font-size: 2rem;
+      background: $card-bg;
+      border-radius: 50%;
+      box-shadow: $shadow;
+    }
+  }
+}
+
+// Tabs
+.main-tabs {
+  margin: 0 32px 24px 32px;
+  .mat-tab-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff !important;
+    opacity: 1;
+    letter-spacing: 0.5px;
+  }
+  .mat-tab-label-active {
+    color: $brand-green !important;
+    opacity: 1;
+  }
+  .mat-ink-bar {
+    background: $brand-green;
+    height: 3px;
+    border-radius: 2px;
+  }
+}
+
+// Dashboard Cards
+.dashboard-cards {
+  display: flex;
+  gap: 24px;
+  margin: 0 32px 24px 32px;
+  .dashboard-card {
+    flex: 1;
+    min-width: 200px;
+    background: $card-bg;
+    color: $text-main;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .card-title {
+      font-size: 1.1rem;
+      color: $text-secondary;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .card-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .card-sub {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      mat-icon {
+        font-size: 1.2rem;
+        margin-right: 4px;
+      }
+    }
+    &.oee .card-value { color: $brand-green; }
+    &.machines .card-value { color: $brand-blue; }
+    &.parts .card-value { color: $brand-yellow; }
+    &.cost .card-value { color: $brand-orange; }
+    &.oee .card-sub { color: $brand-green; }
+    &.machines .card-sub { color: $brand-blue; }
+    &.parts .card-sub { color: $brand-yellow; }
+    &.cost .card-sub { color: $brand-orange; }
+    position: relative;
+    .card-icon {
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      transform: translateY(-50%);
+      font-size: 2.8rem;
+      opacity: 1;
+      pointer-events: none;
+    }
+    &.oee .card-icon mat-icon {
+      color: $brand-green;
+    }
+    &.machines .card-icon mat-icon {
+      color: $brand-blue;
+    }
+    &.parts .card-icon mat-icon {
+      color: $brand-yellow;
+    }
+    &.cost .card-icon mat-icon {
+      color: $brand-orange;
+    }
+  }
+}
+
+// Main Content Row
+.main-content-row {
+  display: flex;
+  gap: 24px;
+  margin: 0 32px 24px 32px;
+  align-items: flex-start;
+}
+
+// Machine Status Overview
+.machine-status-card {
+  flex: 2;
+  background: $card-bg;
+  border-radius: $border-radius;
+  padding: 24px;
+  box-shadow: $shadow;
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $text-main;
+    margin-bottom: 16px;
+    .status-buttons {
+      display: flex;
+      gap: 8px;
+      .status-btn {
+        font-size: 0.95rem;
+        font-weight: 500;
+        border-radius: 20px;
+        padding: 2px 16px;
+        background: transparent;
+        color: $text-main;
+        border: 1.5px solid transparent;
+        transition: border 0.2s;
+        &.running span { background: $brand-green; }
+        &.idle span { background: $brand-yellow; }
+        &.breakdown span { background: $brand-red; }
+        &.maintenance span { background: $brand-purple; }
+        span {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin-right: 6px;
+        }
+        &:hover, &:focus {
+          border: 1.5px solid $brand-green;
+        }
+      }
+    }
+  }
+  .machine-cards-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 8px;
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+    .machine-card {
+      min-width: 0;
+      width: 100%;
+      min-height: 80px;
+      background: $card-bg-alt;
+      border-radius: 10px;
+      padding: 8px 10px;
+      color: $text-main;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 0 1px 6px #0002;
+      .machine-title {
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 2px;
+      }
+      .machine-status {
+        font-size: 0.85rem;
+        font-weight: 500;
+        border-radius: 8px;
+        padding: 1px 8px;
+        margin-bottom: 2px;
+        &.running { background: rgba($brand-green, 0.15); color: $brand-green; }
+        &.idle { background: rgba($brand-yellow, 0.15); color: $brand-yellow; }
+        &.breakdown { background: rgba($brand-red, 0.15); color: $brand-red; }
+        &.maintenance { background: rgba($brand-purple, 0.15); color: $brand-purple; }
+      }
+      .machine-part, .machine-oee {
+        font-size: 0.8rem;
+        color: $text-secondary;
+      }
+    }
+  }
+  .view-all {
+    text-align: right;
+    margin-top: 8px;
+    a {
+      color: $brand-blue;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      mat-icon { font-size: 1.1rem; }
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+// Alerts Card
+.alerts-card {
+  flex: 1;
+  background: $card-bg;
+  border-radius: $border-radius;
+  padding: 24px;
+  box-shadow: $shadow;
+  .card-header {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $text-main;
+    margin-bottom: 16px;
+  }
+  .alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 0 !important;
+    .alert-card {
+      background: $card-bg-alt;
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: $text-main;
+      box-shadow: 0 1px 6px #0002;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      min-height: 72px;
+      padding-left: 0 !important;
+      .alert-icon {
+        margin-left: 0 !important;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        min-width: 40px;
+        margin-right: 12px;
+      }
+      .alert-title {
+        font-weight: 700;
+        font-size: 1.08rem;
+        margin-bottom: 2px;
+        color: $text-main;
+        text-align: left;
+      }
+      .alert-desc {
+        font-size: 1rem;
+        color: $text-secondary;
+        margin-bottom: 2px;
+        text-align: left;
+      }
+      .alert-time {
+        font-size: 0.92rem;
+        color: #b0b0b0;
+        text-align: left;
+      }
+      > div:last-child {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: auto;
+        flex: 1;
+        text-align: left;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+      }
+      .alert-title, .alert-desc, .alert-time {
+        text-align: left;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+      }
+      &.info { border-left: 4px solid $brand-blue; }
+      &.warn { border-left: 4px solid $brand-yellow; }
+      &.error { border-left: 4px solid $brand-red; }
+    }
+  }
+}
+
+// Tool Monitoring
+.tool-monitoring-card {
+  margin: 0 32px 24px 32px;
+  background: $card-bg;
+  border-radius: $border-radius;
+  padding: 24px;
+  box-shadow: $shadow;
+  .card-header {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $text-main;
+    margin-bottom: 16px;
+  }
+  .tool-cards-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    @media (max-width: 1100px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+    .tool-card {
+      background: $card-bg-alt;
+      border-radius: 12px;
+      padding: 12px;
+      color: $text-main;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 0 1px 8px #0003;
+      .tool-title { font-weight: 600; font-size: 1.1rem; }
+      .tool-name { font-size: 0.95rem; color: $text-secondary; }
+      .tool-amount { font-size: 1rem; color: $brand-yellow; }
+      .tool-percent { font-size: 1.1rem; font-weight: 700; }
+      .tool-life { font-size: 0.9rem; color: $text-secondary; }
+      &.ok .tool-percent { color: $brand-green; }
+      &.warn .tool-percent { color: $brand-yellow; }
+      &.error .tool-percent { color: $brand-red; }
+    }
+  }
+}
+
+// Performance Table
+.performance-table-card {
+  margin: 0 32px 32px 32px;
+  background: $card-bg;
+  border-radius: $border-radius;
+  padding: 24px;
+  box-shadow: $shadow;
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $text-main;
+    margin-bottom: 16px;
+    button {
+      font-size: 1rem;
+      font-weight: 500;
+      mat-icon { margin-right: 4px; }
+    }
+  }
+  table {
+    width: 100%;
+    color: $text-main;
+    th, td {
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background: $card-bg-alt;
+      color: $text-secondary;
+      font-weight: 600;
+    }
+    tr.mat-row:nth-child(even) {
+      background: $card-bg;
+    }
+    tr.mat-row:nth-child(odd) {
+      background: $card-bg-alt;
+    }
+  }
+}
+
+// New styles for the new HTML structure
+$card-bg: linear-gradient(135deg, #23283a 60%, #2c3142 100%);
+$card-bg-alt: linear-gradient(135deg, #1a1e2a 60%, #23283a 100%);
+$text-main: #fff;
+$text-secondary: #b0b0b0;
+$brand-green: #7fff00;
+$brand-blue: #00eaff;
+$brand-yellow: #ffb300;
+$brand-red: #ff5252;
+$brand-orange: #ff6f00;
+$border-radius: 18px;
+$shadow: 0 4px 24px 0 #0008;
+
+.dashboard-cards-row {
+  display: flex;
+  gap: 24px;
+  margin: 32px 32px 24px 32px;
+  .dashboard-card {
+    flex: 1;
+    min-width: 220px;
+    background: $card-bg;
+    color: $text-main;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    padding: 28px 24px 24px 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .card-title {
+      font-size: 1.1rem;
+      color: $text-secondary;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .card-value {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .card-sub {
+      font-size: 1rem;
+      color: $brand-green;
+      margin-bottom: 8px;
+    }
+    .card-icon {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      font-size: 2.2rem;
+      opacity: 0.18;
+    }
+    &.oee .card-value { color: $brand-green; }
+    &.machines .card-value { color: $brand-blue; }
+    &.parts .card-value { color: $brand-yellow; }
+    &.cost .card-value { color: $brand-orange; }
+    &.cost .card-sub { color: $brand-orange; }
+  }
+}
+
+.dashboard-main-row {
+  display: flex;
+  gap: 24px;
+  margin: 0 32px 24px 32px;
+  align-items: flex-start;
+  .machine-status-card, .alerts-card {
+    background: $card-bg;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    padding: 24px;
+    flex: 2;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+  .alerts-card {
+    flex: 1;
+    margin-left: 0;
+  }
+}
+
+/* Example for machine cards inside machine-status-card */
+.machine-status-card {
+  .machine-cards-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 8px;
+    .machine-card {
+      background: $card-bg-alt;
+      border-radius: 12px;
+      padding: 12px;
+      color: $text-main;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 0 1px 8px #0003;
+      .machine-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+      }
+      .machine-status {
+        font-size: 0.95rem;
+        font-weight: 500;
+        border-radius: 10px;
+        padding: 2px 10px;
+        margin-bottom: 4px;
+        &.running { background: #7fff0033; color: $brand-green; }
+        &.idle { background: #ffb30033; color: $brand-yellow; }
+        &.breakdown { background: #ff525233; color: $brand-red; }
+        &.maintenance { background: #b388ff33; color: #b388ff; }
+      }
+      .machine-part, .machine-oee {
+        font-size: 0.9rem;
+        color: $text-secondary;
+      }
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+      &:hover {
+        background: linear-gradient(135deg, #23283a 80%, #00eaff22 100%);
+        box-shadow: 0 4px 24px 0 #00eaff55, 0 1px 8px #0003;
+        transform: translateY(-4px) scale(1.03);
+      }
+    }
+  }
+}
+
+/* Alerts card, tool monitoring, and table styles can be similarly themed */
+
+.alerts-card {
+  /* ... */
+}
+
+.tool-monitoring-card {
+  /* ... */
+}
+
+.performance-table-card {
+  /* ... */
+}
+
+/* General styles */
+body {
+  background: #181c23;
+  color: $text-main;
+  font-family: 'Inter', 'Roboto', Arial, sans-serif;
+  margin: 0;
+}
+
+// Add styles for the new column and row layout
+.main-content-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 32px 24px 32px;
+}
+
+.tool-alerts-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.tool-monitoring-card {
+  flex: 2;
+  min-width: 0;
+}
+
+.alerts-card {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .tool-alerts-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+// Machine Performance Table Status Badges and OEE coloring
+.status-badge {
+  display: inline-block;
+  padding: 2px 14px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  background: #23283a;
+  color: #fff;
+  &.running {
+    background: #7fff0033;
+    color: $brand-green;
+    border: 1.5px solid $brand-green;
+  }
+  &.idle {
+    background: #ffb30033;
+    color: $brand-yellow;
+    border: 1.5px solid $brand-yellow;
+  }
+  &.breakdown {
+    background: #ff525233;
+    color: $brand-red;
+    border: 1.5px solid $brand-red;
+  }
+  &.maintenance {
+    background: #b388ff33;
+    color: $brand-purple;
+    border: 1.5px solid $brand-purple;
+  }
+}
+.oee-green {
+  color: $brand-green !important;
+  font-weight: 600;
+}
+.oee-gray {
+  color: #b0b0b0 !important;
+  font-weight: 600;
+}
