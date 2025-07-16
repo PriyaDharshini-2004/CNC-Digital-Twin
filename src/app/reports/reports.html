@@ -13,6 +13,7 @@
     <mat-icon>filter_alt</mat-icon>
     Report Filters
   </div>
+
   <div class="filters-row">
     <!-- Report Type -->
     <mat-form-field appearance="fill">
@@ -24,6 +25,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
     <!-- Date Range -->
     <mat-form-field appearance="fill">
       <mat-label>Date Range</mat-label>
@@ -33,7 +35,8 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <!-- Custom Range Date Pickers -->
+
+    <!-- Custom Date Range Pickers -->
     <ng-container *ngIf="selectedDateRange === 'custom'">
       <mat-form-field appearance="fill">
         <mat-label>Start Date</mat-label>
@@ -41,6 +44,7 @@
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
       </mat-form-field>
+
       <mat-form-field appearance="fill">
         <mat-label>End Date</mat-label>
         <input matInput [matDatepicker]="endPicker" [(ngModel)]="customEndDate">
@@ -48,6 +52,7 @@
         <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
     </ng-container>
+
     <!-- Machine -->
     <mat-form-field appearance="fill">
       <mat-label>Machine</mat-label>
@@ -57,14 +62,17 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <!-- Refresh Card -->
-    <mat-card class="refresh-card">
+
+    <!-- Refresh Button styled like a field -->
+    <div class="refresh-field">
       <button mat-stroked-button color="primary" class="refresh-btn">
         <mat-icon>refresh</mat-icon> Refresh
       </button>
-    </mat-card>
+    </div>
   </div>
 </mat-card>
+
+
 
 <!-- Stats Cards -->
 <div class="stats-cards-row">

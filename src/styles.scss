@@ -9,23 +9,48 @@ body {
   margin: 0;
 }
 
-.mat-tab-label {
+/* Commenting out previous tab label overrides to avoid conflicts */
+// .mat-tab-label {
+//   color: #fff !important;
+//   opacity: 1 !important;
+// }
+// .mat-tab-label.mat-tab-label-active {
+//   color: #a259ff !important;
+//   font-weight: 600;
+// }
+// ::ng-deep .mat-tab-label, ::ng-deep .mat-tab-label-content, ::ng-deep .mat-tab-label.mat-tab-label-active {
+//   color: #fff !important;
+//   opacity: 1 !important;
+// }
+// ::ng-deep .main-tabs .mat-tab-label, ::ng-deep .main-tabs .mat-tab-label.mat-tab-label-active {
+//   color: #fff !important;
+//   opacity: 1 !important;
+// }
+
+/* Most specific selector for main-tabs tab labels (test with red background) */
+::ng-deep .main-tabs .mat-tab-label,
+::ng-deep .main-tabs .mat-tab-label-content,
+::ng-deep .main-tabs .mat-tab-label.mat-tab-label-active {
+  color: #fff !important;
+  background: #ff0000 !important; /* TEST: Should see red background on tab labels */
+  opacity: 1 !important;
+}
+
+::ng-deep .mat-tab-label, 
+::ng-deep .mat-tab-label-content, 
+::ng-deep .mat-tab-label.mat-tab-label-active {
   color: #fff !important;
   opacity: 1 !important;
 }
+.mat-tab-label {
+  color: white !important;
+}
+
 .mat-tab-label.mat-tab-label-active {
-  color: #a259ff !important;
+  color: white !important;
   font-weight: 600;
 }
 
-// Force all Angular Material tab labels, including active, to be white
-::ng-deep .mat-tab-label, ::ng-deep .mat-tab-label-content, ::ng-deep .mat-tab-label.mat-tab-label-active {
-  color: #fff !important;
-  opacity: 1 !important;
-}
-
-// Force all Angular Material main tab labels to be white
-::ng-deep .main-tabs .mat-tab-label, ::ng-deep .main-tabs .mat-tab-label.mat-tab-label-active {
-  //color: #fff !important;
-  opacity: 1 !important;
+.mat-ink-bar {
+  background-color: #a259ff !important;
 }

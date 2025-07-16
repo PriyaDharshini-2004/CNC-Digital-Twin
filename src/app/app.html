@@ -13,24 +13,29 @@
   </div>
 </div>
 
-<!-- Tabs: Place directly below the header bar -->
-<mat-tab-group [(selectedIndex)]="selectedTabIndex" class="main-tabs">
-  <mat-tab label="Dashboard"></mat-tab>
-  <mat-tab label="Analytics"></mat-tab>
-  <mat-tab label="Master Data"></mat-tab>
-  <mat-tab label="Reports"></mat-tab>
+<!-- Tabs: Using router navigation -->
+<mat-tab-group class="main-tabs" [selectedIndex]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span style="color:white">Dashboard</span>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span style="color:white">Analytics</span>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span style="color:white">Master Data</span>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span style="color:white">Reports</span>
+    </ng-template>
+  </mat-tab>
 </mat-tab-group>
 
-<!-- Tab Content: Only show the content for the selected tab -->
-<div *ngIf="selectedTabIndex === 0">
-  <app-dashboard></app-dashboard>
-</div>
-<div *ngIf="selectedTabIndex === 1">
-  <app-analytics></app-analytics>
-</div>
-<div *ngIf="selectedTabIndex === 2">
-  <app-master-data></app-master-data>
-</div>
-<div *ngIf="selectedTabIndex === 3">
-  <app-reports></app-reports>
-</div>
+<!-- Routed Page -->
+<router-outlet></router-outlet>

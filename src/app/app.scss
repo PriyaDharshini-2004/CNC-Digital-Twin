@@ -3,15 +3,18 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px 32px 8px 32px;
+
   .header-title {
     display: flex;
     align-items: center;
+
     .brand {
       font-size: 2rem;
       font-weight: 700;
       color: #fff;
       margin-right: 12px;
     }
+
     .active-dot {
       width: 10px;
       height: 10px;
@@ -20,15 +23,18 @@
       margin-right: 8px;
       display: inline-block;
     }
+
     .subtitle {
       font-size: 1.1rem;
       color: #a0e7a0;
       font-weight: 500;
     }
   }
+
   .header-user {
     display: flex;
     align-items: center;
+
     .last-updated {
       font-size: 0.9rem;
       color: #b0b0b0;
@@ -36,6 +42,7 @@
       text-align: right;
       line-height: 1.2;
     }
+
     .user-btn {
       color: #fff;
       font-size: 2rem;
@@ -48,4 +55,43 @@
 
 .main-tabs {
   margin: 0 32px 24px 32px;
+}
+
+/* ✅ Tab Label Text & Ink Bar Override */
+::ng-deep .main-tabs .mat-tab-label {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+::ng-deep .main-tabs .mat-tab-label-content {
+  color: #ffffff !important;
+}
+
+::ng-deep .main-tabs .mat-tab-label.mat-tab-label-active {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+::ng-deep .mat-ink-bar {
+  background-color: #a259ff !important; /* Active tab underline */
+}
+::ng-deep .mat-tab-label {
+  color: white !important;
+}
+
+::ng-deep .mat-tab-label.mat-tab-label-active {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+::ng-deep .mat-ink-bar {
+  background-color: #a259ff !important;
+}
+:host ::ng-deep .mat-tab-label {
+  color: white !important;
+}
+
+:host ::ng-deep .mat-tab-label.mat-tab-label-active {
+  color: white !important;
+  font-weight: 600 !important;
 }
