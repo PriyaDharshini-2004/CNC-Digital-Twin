@@ -17,8 +17,9 @@
 }
 
 .metrics-card {
-  flex: 1 1 180px;
-  min-width: 180px;
+  flex: 1 1 200px;       // Ensures equal width and prevents full row
+  max-width: 240px;      // Prevents overly stretching
+  min-width: 180px;      // Keeps cards responsive but not too small
   background: linear-gradient(135deg, #23283a 60%, #2c3142 100%);
   color: #fff;
   border-radius: 14px;
@@ -40,6 +41,7 @@
     transform: translateY(-4px);
   }
 }
+
 
 /* Add background color variety */
 .metrics-card:nth-child(1) { background: linear-gradient(135deg, #005f73, #0a9396); }
