@@ -14,7 +14,7 @@
 </div>
 
 <!-- Tabs: Using router navigation -->
-<mat-tab-group class="main-tabs" [selectedIndex]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)">
+<mat-tab-group *ngIf="!router.url.startsWith('/machine-details')" class="main-tabs" [selectedIndex]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)">
   <mat-tab>
     <ng-template mat-tab-label>
       <span style="color:white">Dashboard</span>

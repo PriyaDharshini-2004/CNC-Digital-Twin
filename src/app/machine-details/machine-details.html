@@ -1,4 +1,7 @@
 <div class="machine-details-container">
+  <button mat-button (click)="goBack()" class="back-btn">
+    <mat-icon>arrow_back</mat-icon> Back
+  </button>
   <h2 class="machine-title">{{ machine.id }}</h2>
 
   <div class="metrics-cards-row">
@@ -13,7 +16,7 @@
   </div>
 
   <mat-card class="idle-reason-card">
-    <div class="idle-reason-title">Idle Reason</div>
+    <div class="idle-reason-title">Idle Resen</div>
     <div class="idle-reason-row" *ngFor="let r of machine.idleReasons">
       <div>{{ r.reason }}</div>
       <div>{{ r.time }}</div>

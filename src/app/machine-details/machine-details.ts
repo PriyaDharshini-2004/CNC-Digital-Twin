@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { NgChartsModule } from 'ng2-charts';
+import { Location } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 
 import { ChartConfiguration, ChartType } from 'chart.js';
@@ -10,7 +12,7 @@ import { ChartConfiguration, ChartType } from 'chart.js';
 @Component({
   selector: 'app-machine-details',
   standalone: true,
-  imports: [CommonModule, MatCardModule, NgChartsModule],
+  imports: [CommonModule, MatCardModule, NgChartsModule, MatIconModule],
   templateUrl: './machine-details.html',
   styleUrls: ['./machine-details.scss']
 })
@@ -24,12 +26,17 @@ export class MachineDetailsComponent {
   };
 
   barChartData: ChartConfiguration<'bar'>['data'] = {
-    labels: ['Planned', 'Actual'],
+    labels: [''],
     datasets: [
       {
-        data: [0, 0],
-        label: 'Production',
-        backgroundColor: ['#66bb6a', '#29b6f6']
+        data: [this.machine.planned],
+        label: 'Planned',
+        backgroundColor: '#66bb6a'
+      },
+      {
+        data: [this.machine.actual],
+        label: 'Actual',
+        backgroundColor: '#29b6f6'
       }
     ]
   };
@@ -69,7 +76,7 @@ export class MachineDetailsComponent {
   { id: 'CNC-030', runtime: '3h 25m', idle: '2h 35m', breakdown: '0h 30m', oee: '78.2%', planned: 190, partId: 'PRT-6678', actual: 175, emp: 'EMP-030', idleReasons: [{ reason: 'Tool Prep', time: '0h 15m' }] }
 ];
 
-constructor(private route: ActivatedRoute) {
+constructor(private route: ActivatedRoute, private location: Location) {
   this.route.params.subscribe(params => {
     this.machineId = params['machineId']?.toUpperCase();
     this.machine = this.machines.find(m => m.id === this.machineId) || this.machines[0];
@@ -89,12 +96,17 @@ constructor(private route: ActivatedRoute) {
     };
 
     this.barChartData = {
-      labels: ['Planned', 'Actual'],
+      labels: [''],
       datasets: [
         {
-          data: [this.machine.planned, this.machine.actual],
-          label: 'Production',
-          backgroundColor: ['#66bb6a', '#29b6f6']
+          data: [this.machine.planned],
+          label: 'Planned',
+          backgroundColor: '#66bb6a'
+        },
+        {
+          data: [this.machine.actual],
+          label: 'Actual',
+          backgroundColor: '#29b6f6'
         }
       ]
     };
@@ -107,5 +119,9 @@ private timeToMinutes(timeStr: string): number {
   const hours = parseInt(match[1], 10);
   const minutes = parseInt(match[2], 10);
   return hours * 60 + minutes;
+}
+
+goBack() {
+  this.location.back();
 }
 }

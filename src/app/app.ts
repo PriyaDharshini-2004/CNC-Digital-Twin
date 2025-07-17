@@ -32,7 +32,7 @@ export class AppComponent {
   selectedTabIndex = 0;
   lastUpdated = new Date().toLocaleTimeString();
 
-  constructor(private router: Router) {
+  constructor(public router: Router) {
     this.syncTabWithRoute();
     this.router.events.subscribe(() => {
       this.syncTabWithRoute();

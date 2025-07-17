@@ -127,3 +127,28 @@
   width: 100% !important;
   max-height: 240px;
 }
+
+.back-btn {
+  margin-bottom: 16px;
+  color: #fff;
+  background: #29b6f6;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #0005;
+  font-weight: 500;
+  padding: 6px 18px 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  mat-icon {
+    vertical-align: middle;
+    margin-right: 6px;
+    font-size: 20px;
+  }
+  &:hover, &:focus {
+    background: #1976d2;
+    box-shadow: 0 4px 16px #0007;
+  }
+}
