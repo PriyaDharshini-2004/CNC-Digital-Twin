@@ -20,14 +20,24 @@
     </div>
   </mat-card>
 
+
+
   <div class="charts-row">
     <mat-card class="chart-card">
       <div class="chart-title">Time Distribution</div>
-      <div class="chart-placeholder">[Pie Chart: Runtime, Idle Time, Break Down]</div>
+      <canvas baseChart
+              [data]="pieChartData"
+              [type]="'pie'">
+      </canvas>
     </mat-card>
+  
     <mat-card class="chart-card">
       <div class="chart-title">Production Comparison</div>
-      <div class="chart-placeholder">[Bar Chart: Production Planned vs Actual Planned]</div>
+      <canvas baseChart
+              [data]="barChartData"
+              [type]="'bar'">
+      </canvas>
     </mat-card>
   </div>
+  
 </div> 

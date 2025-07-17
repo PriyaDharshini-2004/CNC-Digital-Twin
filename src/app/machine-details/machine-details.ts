@@ -2,17 +2,37 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { NgChartsModule } from 'ng2-charts';
+
+
+import { ChartConfiguration, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-machine-details',
   standalone: true,
-  imports: [CommonModule, MatCardModule],
+  imports: [CommonModule, MatCardModule, NgChartsModule],
   templateUrl: './machine-details.html',
   styleUrls: ['./machine-details.scss']
 })
 export class MachineDetailsComponent {
   machineId: string = '';
   machine: any = {};
+
+  pieChartData: ChartConfiguration<'pie'>['data'] = {
+    labels: ['Runtime', 'Idle Time', 'Breakdown'],
+    datasets: [{ data: [0, 0, 0], backgroundColor: ['#42a5f5', '#ffa726', '#ef5350'] }]
+  };
+
+  barChartData: ChartConfiguration<'bar'>['data'] = {
+    labels: ['Planned', 'Actual'],
+    datasets: [
+      {
+        data: [0, 0],
+        label: 'Production',
+        backgroundColor: ['#66bb6a', '#29b6f6']
+      }
+    ]
+  };
 
   machines = [
     { id: 'CNC-001', runtime: '5h 23m', idle: '1h 12m', breakdown: '0h 45m', oee: '92.3%', planned: 200, partId: 'PRT-1234', actual: 180, emp: 'EMP-001', idleReasons: [{ reason: 'Part Changing', time: '0h 20m' }, { reason: 'Tool Changing', time: '0h 10m' }] },
@@ -49,11 +69,43 @@ export class MachineDetailsComponent {
   { id: 'CNC-030', runtime: '3h 25m', idle: '2h 35m', breakdown: '0h 30m', oee: '78.2%', planned: 190, partId: 'PRT-6678', actual: 175, emp: 'EMP-030', idleReasons: [{ reason: 'Tool Prep', time: '0h 15m' }] }
 ];
 
-  constructor(private route: ActivatedRoute) {
-    this.route.params.subscribe(params => {
-      this.machineId = params['machineId']?.toUpperCase();
-      this.machine = this.machines.find(m => m.id === this.machineId) || this.machines[0];
-      
-    });
-  }
-} 
+constructor(private route: ActivatedRoute) {
+  this.route.params.subscribe(params => {
+    this.machineId = params['machineId']?.toUpperCase();
+    this.machine = this.machines.find(m => m.id === this.machineId) || this.machines[0];
+
+    const runtime = this.timeToMinutes(this.machine.runtime);
+    const idle = this.timeToMinutes(this.machine.idle);
+    const breakdown = this.timeToMinutes(this.machine.breakdown);
+
+    this.pieChartData = {
+      labels: ['Runtime', 'Idle Time', 'Breakdown'],
+      datasets: [
+        {
+          data: [runtime, idle, breakdown],
+          backgroundColor: ['#42a5f5', '#ffa726', '#ef5350']
+        }
+      ]
+    };
+
+    this.barChartData = {
+      labels: ['Planned', 'Actual'],
+      datasets: [
+        {
+          data: [this.machine.planned, this.machine.actual],
+          label: 'Production',
+          backgroundColor: ['#66bb6a', '#29b6f6']
+        }
+      ]
+    };
+  });
+}
+
+private timeToMinutes(timeStr: string): number {
+  const match = timeStr.match(/(\d+)h\s*(\d+)m/);
+  if (!match) return 0;
+  const hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  return hours * 60 + minutes;
+}
+}
