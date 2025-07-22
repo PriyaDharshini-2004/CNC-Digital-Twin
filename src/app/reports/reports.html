@@ -18,7 +18,7 @@
     <!-- Report Type -->
     <mat-form-field appearance="fill">
       <mat-label>Report Type</mat-label>
-      <mat-select [(ngModel)]="selectedReportType">
+      <mat-select [(ngModel)]="selectedReportType" (ngModelChange)="refreshReports()">
         <mat-option *ngFor="let type of reportTypes" [value]="type.value">
           <mat-icon style="vertical-align: middle; margin-right: 8px;">{{ type.icon }}</mat-icon>
           {{ type.label }}
@@ -29,7 +29,7 @@
     <!-- Date Range -->
     <mat-form-field appearance="fill">
       <mat-label>Date Range</mat-label>
-      <mat-select [(ngModel)]="selectedDateRange">
+      <mat-select [(ngModel)]="selectedDateRange" (ngModelChange)="refreshReports()">
         <mat-option *ngFor="let range of dateRanges" [value]="range.value">
           {{ range.label }}
         </mat-option>
@@ -40,14 +40,14 @@
     <ng-container *ngIf="selectedDateRange === 'custom'">
       <mat-form-field appearance="fill">
         <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="startPicker" [(ngModel)]="customStartDate">
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="customStartDate" (ngModelChange)="refreshReports()">
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="endPicker" [(ngModel)]="customEndDate">
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="customEndDate" (ngModelChange)="refreshReports()">
         <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
         <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
@@ -56,7 +56,7 @@
     <!-- Machine -->
     <mat-form-field appearance="fill">
       <mat-label>Machine</mat-label>
-      <mat-select [(ngModel)]="selectedMachine">
+      <mat-select [(ngModel)]="selectedMachine" (ngModelChange)="refreshReports()">
         <mat-option *ngFor="let m of machines" [value]="m.value">
           {{ m.label }}
         </mat-option>
@@ -64,11 +64,11 @@
     </mat-form-field>
 
     <!-- Refresh Button styled like a field -->
-    <div class="refresh-field">
-      <button mat-stroked-button color="primary" class="refresh-btn">
-        <mat-icon>refresh</mat-icon> Refresh
+    <!-- <div class="refresh-field">
+      <button mat-stroked-button color="primary" class="refresh-btn" (click)="refreshReports()">
+        <mat-icon>search</mat-icon> search
       </button>
-    </div>
+    </div> -->
   </div>
 </mat-card>
 

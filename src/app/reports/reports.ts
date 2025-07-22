@@ -63,20 +63,25 @@ export class ReportsComponent {
   totalMachines = 30;
   targetOEE = 85;
 
-  topPerformers = [
+  // Store the original data for filtering
+  originalTopPerformers = [
     { machine: 'CNC-002', oee: 99.9, status: 'running' },
     { machine: 'CNC-014', oee: 98.1, status: 'running' },
     { machine: 'CNC-028', oee: 96.9, status: 'running' },
     { machine: 'CNC-011', oee: 95.3, status: 'running' },
     { machine: 'CNC-025', oee: 92.4, status: 'running' }
   ];
-  needsImprovement = [
+  originalNeedsImprovement = [
     { machine: 'CNC-003', oee: 0, status: 'maintenance' },
     { machine: 'CNC-004', oee: 0, status: 'breakdown' },
     { machine: 'CNC-006', oee: 0, status: 'maintenance' },
     { machine: 'CNC-008', oee: 0, status: 'maintenance' },
     { machine: 'CNC-010', oee: 0, status: 'breakdown' }
   ];
+
+  // Use these for display
+  topPerformers = [...this.originalTopPerformers];
+  needsImprovement = [...this.originalNeedsImprovement];
 
   exportReport() {
     // Example: Export top performers as CSV
@@ -92,5 +97,28 @@ export class ReportsComponent {
     a.download = 'report.csv';
     a.click();
     window.URL.revokeObjectURL(url);
+  }
+
+  refreshReports() {
+    // Filter logic for machine
+    let filteredTop = this.originalTopPerformers;
+    let filteredNeeds = this.originalNeedsImprovement;
+
+    if (this.selectedMachine !== 'all') {
+      filteredTop = filteredTop.filter(row => row.machine === this.selectedMachine);
+      filteredNeeds = filteredNeeds.filter(row => row.machine === this.selectedMachine);
+    }
+
+    // You can add more filter logic for reportType, dateRange, etc. as needed
+
+    this.topPerformers = filteredTop;
+    this.needsImprovement = filteredNeeds;
+
+    // Update stats based on filtered data
+    const allOee = [...filteredTop, ...filteredNeeds].map(row => row.oee);
+    this.averageOEE = allOee.length ? +(allOee.reduce((a, b) => a + b, 0) / allOee.length).toFixed(1) : 0;
+    this.runningMachines = [...filteredTop, ...filteredNeeds].filter(row => row.status === 'running').length;
+    this.totalMachines = [...filteredTop, ...filteredNeeds].length;
+    console.log('Reports filtered!');
   }
 }
